@@ -22,6 +22,7 @@ In order to make most use of this repo, the follow tools are required:
 - [x] Run MySQL via Docker
 - [x] Run the PHP/Apache server via Docker
 - [x] Get both Docker instances setup using docker-compose
+- [x] Setup unit testing with PHPUnit
 - [ ] Demonstrate separation of concerns via 'layering'
     - [ ] Authentication layer
     - [ ] Authorization layer (user can only modify/delete themselves)
