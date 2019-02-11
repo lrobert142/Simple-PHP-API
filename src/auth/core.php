@@ -3,6 +3,8 @@
 interface Auth
 {
     public function signup($data);
+
+    public function register_routes($router);
 }
 
 final class DefaultAuth implements Auth
@@ -16,6 +18,11 @@ final class DefaultAuth implements Auth
 
     function signup($data)
     {
-        return $this->dao->signup($data);
+        return array('id' => $this->dao->signup($data));
+    }
+
+    public function register_routes($router)
+    {
+        $router->post('/user', array($this, 'signup'));
     }
 }
