@@ -28,4 +28,19 @@ In order to make most use of this repo, the follow tools are required:
     - [ ] Authorization layer (user can only modify/delete themselves)
     - [ ] Command layer
     - [ ] DB layer
-- [ ] Investigate / Implement dependency injection with PHP
+- [x] Investigate / Implement dependency injection with PHP
+
+# Running this project
+
+1. Install the required deps using `composer install`
+1. Run the Docker containers using `docker-compose up`
+1. Wait for the images to be built + readied
+1. Visit http://localhost:8000 to see the main page
+
+## Running Migrations
+
+TODO
+
+## Running Tests
+
+1. Simply run ` ./vendor/bin/phpunit --bootstrap vendor/autoload.php --testdox tests` to run all tests under the `/tests` directory
