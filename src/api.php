@@ -35,6 +35,10 @@ switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::FOUND:
         $args = $_REQUEST;
         $args['url_args'] = $routeInfo[2];
-        Response\ok($routeInfo[1]($args));
+        try {
+            Response\ok($routeInfo[1]($args));
+        } catch (Exception $e) {
+            Response\bad_request(array('code' => $e->getCode(), 'message' => $e->getMessage()));
+        }
         break;
 }

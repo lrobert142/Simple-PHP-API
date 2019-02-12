@@ -17,25 +17,20 @@ In order to make most use of this repo, the follow tools are required:
 - Update a user (only if authenticated)
 - Delete a user (only if authenticated)
 
-## TODO
+## Features
 
-- [x] Run MySQL via Docker
-- [x] Run the PHP/Apache server via Docker
-- [x] Get both Docker instances setup using docker-compose
-- [x] Setup unit testing with PHPUnit
-- [ ] Demonstrate separation of concerns via 'layering'
-    - [ ] Authentication layer
-    - [ ] Authorization layer (user can only modify/delete themselves)
-    - [ ] Command layer
-    - [ ] DB layer
-- [x] Investigate / Implement dependency injection with PHP
+- [x] MySQL & PHP/Apache server using docker-compose
+- [x] Dependency Injection
+- [x] Separation of concerns via 'layering'
+- [x] Unit testing with PHPUnit
+- [ ] Database migrations
 
 # Running this project
 
 1. Install the required deps using `composer install`
 1. Run the Docker containers using `docker-compose up`
 1. Wait for the images to be built + readied
-1. Visit http://localhost:8000 to see the main page
+1. Visit [http://localhost:8000](http://localhost:8000) to see the main page
 
 ## Running Migrations
 
@@ -45,8 +40,8 @@ FIXME: How do we run them? WHEN do we run them?
 
 1. Simply run ` ./vendor/bin/phpunit --bootstrap vendor/autoload.php --testdox tests` to run all tests under the `/tests` directory
 
-# NOTES
+# Useful Tips
 
-- SSH into PHP/Apache service: `docker exec -it php_api_example_www_1 /bin/bash`
-- SSH into MySQL service: `docker exec -it php_api_example_db_1 /bin/bash`
+- SSH into PHP/Apache service: `docker exec -it api_server /bin/bash`
+- SSH into MySQL service: `docker exec -it api_db /bin/bash`
     - Access DB: `mysql --user root --password` > enter password > `use database;`

@@ -30,6 +30,11 @@ function ok($data)
     handle_with_params(200, array(), $data);
 }
 
+function bad_request($data)
+{
+    handle_with_params(400, array(), $data);
+}
+
 function not_found()
 {
     handle_with_params(404, array(), array('message' => 'URL not found'));
