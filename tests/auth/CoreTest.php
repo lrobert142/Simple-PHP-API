@@ -5,7 +5,7 @@ require_once(__DIR__ . '/../../src/auth/DAO.php');
 
 use PHPUnit\Framework\TestCase;
 
-final class SignupTest extends TestCase
+final class DefaultAuthSignupTest extends TestCase
 {
     public function testSuccess()
     {
@@ -23,11 +23,11 @@ final class SignupTest extends TestCase
 
             public function signup($actual)
             {
-                $this->assertEquals($this->expected, $actual, "Data has been modified");
+                $this->assertEquals($this->expected, $actual);
                 return 1;
             }
         });
 
-        $this->assertEquals(array('id' => 1), $handler->signup($test_data), "Invalid user ID");
+        $this->assertEquals(array('id' => 1), $handler->signup($test_data));
     }
 }
