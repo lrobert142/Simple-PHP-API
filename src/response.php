@@ -1,15 +1,5 @@
 <?php namespace Response;
 
-function negotiateContent($data)
-{
-    if ($_SERVER['HTTP_ACCEPT'] === 'application/json'):
-        header('Content-Type: application/json');
-        echo json_encode($data);
-    else:
-        echo $data;
-    endif;
-}
-
 function handle($status, $headers)
 {
     http_response_code($status);
@@ -22,7 +12,8 @@ function handle($status, $headers)
 function handleWithParams($status, $headers, $data)
 {
     handle($status, $headers);
-    negotiateContent($data);
+    header('Content-Type: application/json');
+    echo json_encode($data);
 }
 
 function ok($data)
