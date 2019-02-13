@@ -11,11 +11,3 @@ function create_connection()
     $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     return $conn;
 }
-
-function error_codes()
-{
-    return array(
-        'DUPLICATE_EMAIL' => 2,
-        'UNKNOWN_ERROR' => 1,
-    );
-}

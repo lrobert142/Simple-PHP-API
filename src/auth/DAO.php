@@ -10,7 +10,7 @@ final class AuthMySqlDAO implements DAO
     private $conn;
     const tablename = "Users";
 
-    public function __construct($conn)
+    public function __construct(PDO $conn)
     {
         $this->conn = $conn;
     }
@@ -26,9 +26,9 @@ final class AuthMySqlDAO implements DAO
             return $this->conn->lastInsertId();
         } catch (PDOException $e) {
             if ($e->getCode() === '23000'):
-                throw new Exception('Email address "' . $data['email'] . '" already in use.', Database\error_codes()['DUPLICATE_EMAIL'], $e);
+                throw new Exception('Email address "' . $data['email'] . '" already in use.', Common\error_codes()['DUPLICATE_FIELD'], $e);
             else:
-                throw new Exception('Unknown exception occurred', Database\error_codes()['UNKNOWN_ERROR'], $e);
+                throw new Exception('Unknown exception occurred', Common\error_codes()['UNKNOWN_DB_ERROR'], $e);
             endif;
         }
     }

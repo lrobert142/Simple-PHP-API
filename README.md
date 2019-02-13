@@ -23,6 +23,8 @@ In order to make most use of this repo, the follow tools are required:
 - [x] Dependency Injection
 - [x] Separation of concerns via 'layering'
 - [x] Unit testing with PHPUnit
+- [ ] Integration testing of DAOs
+- [ ] End-to-End testing
 - [ ] Database migrations
 
 # Running this project
@@ -38,7 +40,7 @@ FIXME: How do we run them? WHEN do we run them?
 
 ## Running Tests
 
-1. Simply run ` ./vendor/bin/phpunit --bootstrap vendor/autoload.php --testdox tests` to run all tests under the `/tests` directory
+1. Simply run `./vendor/bin/phpunit --bootstrap vendor/autoload.php --testdox tests` to run all tests under the `/tests` directory
 
 # Useful Tips
 

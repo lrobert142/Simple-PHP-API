@@ -2,10 +2,6 @@
 
 use DI\Container;
 
-require_once('database.php');
-require_once('auth/core.php');
-require_once('auth/DAO.php');
-
 return [
     'db' => Database\create_connection(),
     'user.dao' => function (Container $c) {

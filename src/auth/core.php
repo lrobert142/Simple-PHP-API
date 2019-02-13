@@ -23,6 +23,6 @@ final class DefaultAuth implements Auth
 
     public function register_routes($router)
     {
-        $router->post('/user', array($this, 'signup'));
+        Common\add_route($router, 'POST', '/user', array($this, 'signup'), 'Spec\signup');
     }
 }
