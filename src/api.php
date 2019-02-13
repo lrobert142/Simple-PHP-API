@@ -31,10 +31,10 @@ try {
     $routeInfo = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $uri);
     switch ($routeInfo[0]) {
         case FastRoute\Dispatcher::NOT_FOUND:
-            Response\not_found();
+            Response\notFound();
             break;
         case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-            Response\method_not_allowed($routeInfo[1]);
+            Response\methodNotAllowed($routeInfo[1]);
             break;
         case FastRoute\Dispatcher::FOUND:
             $args = $_REQUEST;
@@ -43,5 +43,5 @@ try {
             break;
     }
 } catch (Exception $e) {
-    Response\bad_request(array('code' => $e->getCode(), 'message' => $e->getMessage()));
+    Response\badRequest(array('code' => $e->getCode(), 'message' => $e->getMessage()));
 }

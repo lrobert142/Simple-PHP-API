@@ -4,7 +4,7 @@ interface Auth
 {
     public function signup($data);
 
-    public function register_routes($router);
+    public function registerRoutes($router);
 }
 
 final class DefaultAuth implements Auth
@@ -21,8 +21,8 @@ final class DefaultAuth implements Auth
         return array('id' => $this->dao->signup($data));
     }
 
-    public function register_routes($router)
+    public function registerRoutes($router)
     {
-        Common\add_route($router, 'POST', '/user', array($this, 'signup'), 'Spec\signup');
+        Common\addRoute($router, 'POST', '/user', array($this, 'signup'), 'Spec\signup');
     }
 }

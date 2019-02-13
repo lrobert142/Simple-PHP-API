@@ -1,6 +1,6 @@
 <?php namespace Common;
 
-function error_codes()
+function errorCodes()
 {
     //1xx = DB errors
     //2xx = Routing errors
@@ -11,12 +11,12 @@ function error_codes()
     );
 }
 
-function add_route($router, $method, $route, $handler, callable $spec = null)
+function addRoute($router, $method, $route, $handler, callable $spec = null)
 {
     if ($spec):
         $explained = call_user_func($spec, $_REQUEST);
         if (!empty($explained)):
-            throw new \Exception($explained, \Common\error_codes()['SPEC_FAILURE']);
+            throw new \Exception(implode(' ', $explained), \Common\errorCodes()['SPEC_FAILURE']);
         endif;
     endif;
     $router->addRoute($method, $route, $handler);

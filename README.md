@@ -22,10 +22,10 @@ In order to make most use of this repo, the follow tools are required:
 - [x] MySQL & PHP/Apache server using docker-compose
 - [x] Dependency Injection
 - [x] Separation of concerns via 'layering'
+- [ ] Database migrations
 - [x] Unit testing with PHPUnit
 - [ ] Integration testing of DAOs
 - [ ] End-to-End testing
-- [ ] Database migrations
 
 # Running this project
 

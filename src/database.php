@@ -1,6 +1,6 @@
 <?php namespace Database;
 
-function create_connection()
+function createConnection()
 {
     $db = 'database';
     $host = 'db:3306';

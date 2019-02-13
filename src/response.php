@@ -1,6 +1,6 @@
 <?php namespace Response;
 
-function negotiate_content($data)
+function negotiateContent($data)
 {
     if ($_SERVER['HTTP_ACCEPT'] === 'application/json'):
         header('Content-Type: application/json');
@@ -19,28 +19,28 @@ function handle($status, $headers)
     }
 }
 
-function handle_with_params($status, $headers, $data)
+function handleWithParams($status, $headers, $data)
 {
     handle($status, $headers);
-    negotiate_content($data);
+    negotiateContent($data);
 }
 
 function ok($data)
 {
-    handle_with_params(200, array(), $data);
+    handleWithParams(200, array(), $data);
 }
 
-function bad_request($data)
+function badRequest($data)
 {
-    handle_with_params(400, array(), $data);
+    handleWithParams(400, array(), $data);
 }
 
-function not_found()
+function notFound()
 {
-    handle_with_params(404, array(), array('message' => 'URL not found'));
+    handleWithParams(404, array(), array('message' => 'URL not found'));
 }
 
-function method_not_allowed($allowed_methods)
+function methodNotAllowed($allowed_methods)
 {
     handle(405, array('Accept: ' . implode(', ', $allowed_methods)));
 }

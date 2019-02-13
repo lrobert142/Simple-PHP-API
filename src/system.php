@@ -3,7 +3,7 @@
 use DI\Container;
 
 return [
-    'db' => Database\create_connection(),
+    'db' => Database\createConnection(),
     'user.dao' => function (Container $c) {
         return new AuthMySqlDAO($c->get('db'));
     },
