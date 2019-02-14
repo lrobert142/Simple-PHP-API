@@ -24,10 +24,13 @@ if (false !== $pos = strpos($uri, '?')):
 endif;
 $uri = rawurldecode($uri);
 
+$params = $_REQUEST;
+$params['authorization'] = $_SERVER['HTTP_AUTHORIZATION'];
+
 try {
     $router = new DefaultRouter();
     $container->get('user.handler')->registerRoutes($router);
-    Response\ok($router->dispatch($_SERVER['REQUEST_METHOD'], $uri, $_REQUEST));
+    Response\ok($router->dispatch($_SERVER['REQUEST_METHOD'], $uri, $params));
 } catch (Exception $e) {
     Response\badRequest(array('code' => $e->getCode(), 'message' => $e->getMessage()));
 }

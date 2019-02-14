@@ -31,13 +31,16 @@ In order to make most use of this repo, the follow tools are required:
 
 1. Install the required deps using `composer install`
 1. Export environment variables for config using `export <ENV_VAR>=<VAL>`
+    1. I would recommend [direnv](https://direnv.net/) for managing project environment variables
 1. Run the Docker containers using `docker-compose up`
 1. Wait for the images to be built + readied
 1. Use [http://localhost:8000](http://localhost:8000) as the base URL for API calls
 
 ## Running Migrations
 
-FIXME: How do we run them? WHEN do we run them?
+Currently, migrations must be run manually on the database, but should not require any servers to be restarted.
+
+The automation of running these migrations will be looked at in the future.
 
 ## Running Tests
 

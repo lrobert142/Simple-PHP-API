@@ -5,6 +5,8 @@ interface DAO
     public function signup(array $data);
 
     public function login(array $data);
+
+    public function resetPassword(array $data);
 }
 
 final class AuthMySqlDAO implements DAO
@@ -52,5 +54,11 @@ final class AuthMySqlDAO implements DAO
         else:
             throw new Exception('Invalid login credentials', Common\errorCodes()['INVALID_LOGIN_CREDENTIALS']);
         endif;
+    }
+
+    public function resetPassword(array $data)
+    {
+        // TODO: Implement resetPassword() method.
+        throw new Exception('Not Yet Implemented');
     }
 }

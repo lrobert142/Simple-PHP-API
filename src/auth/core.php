@@ -8,6 +8,8 @@ interface Auth
 
     public function login(array $data);
 
+    public function resetPassword(array $data);
+
     public function registerRoutes(Router $router);
 }
 
@@ -38,9 +40,16 @@ final class DefaultAuth implements Auth
         ));
     }
 
+    public function resetPassword(array $data)
+    {
+        // TODO: Implement method.
+        return false;
+    }
+
     public function registerRoutes(Router $router)
     {
         $router->addRoute('POST', '/user', array($this, 'signup'), 'AuthSpec\signup');
         $router->addRoute('POST', '/login', array($this, 'login'), 'AuthSpec\login');
+        $router->addRoute('POST', '/reset-password', array($this, 'resetPassword'), 'AuthSpec\resetPassword');
     }
 }

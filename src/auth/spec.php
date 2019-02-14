@@ -43,3 +43,22 @@ function login($params)
 
     return $messages;
 }
+
+function resetPassword($params)
+{
+    $messages = requireKeys(array('old_password', 'new_password', 'confirm_password', 'authorization'), $params);
+
+    if (isset($params['new_password']) && isset($params['confirm_password']) && $params['new_password'] !== $params['confirm_password']):
+        $messages[] = 'Passwords do not match';
+    endif;
+
+    if (isset($params['authorization']) && explode(' ', $params['authorization'])[0] !== 'Bearer'):
+        $messages[] = 'Invalid authorization scheme';
+    endif;
+
+    if (isset($params['authorization']) && empty(explode(' ', $params['authorization'])[1])):
+        $messages[] = 'Authorization token empty';
+    endif;
+
+    return $messages;
+}
