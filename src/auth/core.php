@@ -1,5 +1,7 @@
 <?php
 
+use ReallySimpleJWT\Token;
+
 interface Auth
 {
     public function signup(array $data);
@@ -12,10 +14,12 @@ interface Auth
 final class DefaultAuth implements Auth
 {
     private $dao;
+    private $config;
 
-    public function __construct(DAO $dao)
+    public function __construct(DAO $dao, array $config)
     {
-        return $this->dao = $dao;
+        $this->dao = $dao;
+        $this->config = $config;
     }
 
     function signup(array $data)
@@ -26,7 +30,12 @@ final class DefaultAuth implements Auth
     function login(array $data)
     {
         $user = $this->dao->login($data);
-        return array('token' => 'TODO: Generate token from $user!');
+        return array('token' => Token::create(
+            $user['ID'],
+            $this->config['jwt_secret'],
+            time() + $this->config['jwt_expiration_epoch'],
+            $this->config['jwt_issuer']
+        ));
     }
 
     public function registerRoutes(Router $router)

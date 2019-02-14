@@ -29,5 +29,9 @@ services:
       DB_NAME: database
       DB_USER: admin
       DB_PASSWORD: admin
+      JWT_EXPIRATION_EPOCH: ${JWT_EXPIRATION_EPOCH}
+      JWT_ISSUER: ${JWT_ISSUER}
+      JWT_SECRET: ${JWT_SECRET}
+
 volumes:
   db_data: {}

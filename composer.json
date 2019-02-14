@@ -3,6 +3,7 @@
         "phpunit/phpunit": "^8"
     },
     "require": {
-        "php-di/php-di": "^6.0"
+        "php-di/php-di": "^6.0",
+        "rbdwllr/reallysimplejwt": "^2.0"
     }
 }

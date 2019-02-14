@@ -30,9 +30,10 @@ In order to make most use of this repo, the follow tools are required:
 # Running this project
 
 1. Install the required deps using `composer install`
+1. Export environment variables for config using `export <ENV_VAR>=<VAL>`
 1. Run the Docker containers using `docker-compose up`
 1. Wait for the images to be built + readied
-1. Visit [http://localhost:8000](http://localhost:8000) to see the main page
+1. Use [http://localhost:8000](http://localhost:8000) as the base URL for API calls
 
 ## Running Migrations
 

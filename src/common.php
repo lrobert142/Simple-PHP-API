@@ -1,5 +1,6 @@
 <?php namespace Common;
 
+
 function errorCodes()
 {
     //1xx = DB errors
@@ -8,8 +9,10 @@ function errorCodes()
     return array(
         'UNKNOWN_DB_ERROR' => 100,
         'DUPLICATE_FIELD' => 101,
+
         'SPEC_FAILURE' => 200,
         'ROUTE_NOT_FOUND' => 201,
+
         'DUPLICATE_ROUTE' => 300,
         'INVALID_REQUEST_METHOD' => 301,
     );
