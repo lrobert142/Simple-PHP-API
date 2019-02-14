@@ -11,7 +11,12 @@ final class AuthRequireKeysTest extends TestCase
         $this->assertEmpty(AuthSpec\requireKeys(array('foo', 'bar'), array('foo' => '', 'bar' => '')));
     }
 
-    public function testMissingKeys()
+    public function testMissingSomeKeys()
+    {
+        $this->assertEquals(array('Missing keys: bar'), AuthSpec\requireKeys(array('foo', 'bar'), array('foo' => '')));
+    }
+
+    public function testMissingAllKeys()
     {
         $this->assertEquals(array('Missing keys: foo, bar'), AuthSpec\requireKeys(array('foo', 'bar'), array()));
     }
