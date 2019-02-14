@@ -42,8 +42,14 @@ final class DefaultAuth implements Auth
 
     public function resetPassword(array $data)
     {
-        // TODO: Implement method.
-        return false;
+        $token = explode(' ', $data['authorization'])[1];
+        if (!Token::validate($token, $this->config['jwt_secret'])):
+            throw new Exception('Authorization token invalid', Common\errorCodes()['INVALID_AUTHORIZATION_TOKEN']);
+        endif;
+
+        $data['user_id'] = Token::getPayload($token, $this->config['jwt_secret'])['user_id'];
+
+        return $this->dao->resetPassword($data);
     }
 
     public function registerRoutes(Router $router)

@@ -51,9 +51,9 @@ final class DefaultAuthLoginTest extends TestCase
     {
         $test_data = array('email' => 'email@domain.com', 'password' => 'Password01');
         $config = array(
-            'jwt_secret' => 'cJ157$5MTPL5',
-            'jwt_expiration_epoch' => 60,
-            'jwt_issuer' => 'UniTest'
+            'jwt_secret' => 'SuperSecret1!',
+            'jwt_expiration_epoch' => 3600,
+            'jwt_issuer' => 'UnitTest'
         );
 
         $handler = new DefaultAuth(new class($test_data) extends TestCase implements DAO
@@ -94,12 +94,54 @@ final class DefaultAuthGetAllTest extends TestCase
 {
     public function testValidToken()
     {
-        $test_data = array('limit' => 10, 'offset' => 10, 'authorization' => '');
         $config = array(
-            'jwt_secret' => 'cJ157$5MTPL5',
-            'jwt_expiration_epoch' => 60,
-            'jwt_issuer' => 'UniTest'
+            'jwt_secret' => 'SuperSecret1!',
+        );
+        $test_data = array(
+            'old_password' => 'Password01',
+            'new_password' => 'Password02',
+            'confirm_password' => 'Password02',
+            'authorization' => 'Bearer ' . Token::create(1, $config['jwt_secret'], time() + 3600, 'UnitTest')
+        );
 
+        $handler = new DefaultAuth(new class($test_data) extends TestCase implements DAO
+        {
+            private $expected;
+
+            public function __construct($data)
+            {
+                $data['user_id'] = 1;
+                $this->expected = $data;
+                parent::__construct();
+            }
+
+            public function signup($_)
+            {
+                $this->fail("Method should not be called");
+            }
+
+            public function login($_)
+            {
+                $this->fail("Method should not be called");
+            }
+
+            public function resetPassword($actual)
+            {
+                $this->assertEquals($this->expected, $actual);
+                return true;
+            }
+        }, $config);
+
+        $this->assertTrue($handler->resetPassword($test_data);
+    }
+
+    public function testInvalidToken()
+    {
+        $config = array(
+            'jwt_secret' => 'SuperSecret1!',
+        );
+        $test_data = array(
+            'authorization' => 'Bearer NotAToken'
         );
 
         $handler = new DefaultAuth(new class($test_data) extends TestCase implements DAO
@@ -117,28 +159,22 @@ final class DefaultAuthGetAllTest extends TestCase
                 $this->fail("Method should not be called");
             }
 
-            public function login($actual)
+            public function login($_)
             {
                 $this->fail("Method should not be called");
             }
 
-            public function resetPassword($data)
+            public function resetPassword($_)
             {
-                $this->assertEquals(array('limit' => 10, 'offset' => 10), $data);
-                return array(
-                    array(
-                        'ID' => 1,
-                        'Email' => 'email@domain.com'
-                    ),
-                    array(
-                        'ID' => 1,
-                        'Email' => 'foo@bar.com'
-                    ),
-                );
+                $this->fail("Method should not be called");
             }
         }, $config);
 
-        $users = $handler->resetPassword($test_data);
-        //TODO Get all users
+        try {
+            $handler->resetPassword($test_data);
+        } catch (Exception $e) {
+            $this->assertEquals('Authorization token invalid', $e->getMessage());
+            $this->assertEquals(Common\errorCodes()['INVALID_AUTHORIZATION_TOKEN'], $e->getCode());
+        }
     }
 }

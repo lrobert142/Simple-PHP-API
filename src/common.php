@@ -5,6 +5,7 @@ function errorCodes()
     //1xx = DB errors
     //2xx = Routing errors
     //3xx = Internal errors
+    //4xx = Authentication/Authorization errors
     return array(
         'UNKNOWN_DB_ERROR' => 100,
         'DUPLICATE_FIELD' => 101,
@@ -15,5 +16,7 @@ function errorCodes()
 
         'DUPLICATE_ROUTE' => 300,
         'INVALID_REQUEST_METHOD' => 301,
+
+        'INVALID_AUTHORIZATION_TOKEN' => 400,
     );
 }
