@@ -13,6 +13,8 @@ function errorCodes()
 
 function addRoute($router, $method, $route, $handler, callable $spec = null)
 {
+    var_dump($_REQUEST);
+    //TODO Only run spec when routing, not on every request!
     if ($spec):
         $explained = call_user_func($spec, $_REQUEST);
         if (!empty($explained)):

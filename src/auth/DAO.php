@@ -3,6 +3,8 @@
 interface DAO
 {
     public function signup($data);
+
+    public function login($data);
 }
 
 final class AuthMySqlDAO implements DAO
@@ -31,5 +33,11 @@ final class AuthMySqlDAO implements DAO
                 throw new Exception('Unknown exception occurred', Common\errorCodes()['UNKNOWN_DB_ERROR'], $e);
             endif;
         }
+    }
+
+    public function login($data)
+    {
+        // TODO: Implement login() method.
+        return array();
     }
 }

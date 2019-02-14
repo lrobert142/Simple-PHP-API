@@ -26,7 +26,7 @@ $uri = rawurldecode($uri);
 try {
     //Routing
     $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) use ($container) {
-        $container->get('user.handler')->register_routes($r);
+        $container->get('user.handler')->registerRoutes($r);
     });
     $routeInfo = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $uri);
     switch ($routeInfo[0]) {
