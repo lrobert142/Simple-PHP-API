@@ -26,6 +26,10 @@ final class DefaultAuthSignupTest extends TestCase
                 $this->assertEquals($this->expected, $actual);
                 return 1;
             }
+
+            public function login($data) {
+                $this->fail("Method should not be called");
+            }
         });
 
         $this->assertEquals(array('id' => 1), $handler->signup($test_data));

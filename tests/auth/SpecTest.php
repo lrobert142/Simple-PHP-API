@@ -6,25 +6,25 @@ use PHPUnit\Framework\TestCase;
 
 final class AuthSpecSignupTest extends TestCase
 {
-    public function testSuccess()
+    public function testValid()
     {
-        $this->assertEmpty(Spec\signup(array('email' => 'email@domain.com', 'password' => 'Password01')));
+        $this->assertEmpty(AuthSpec\signup(array('email' => 'email@domain.com', 'password' => 'Password01')));
     }
 
     public function testMissingKeys()
     {
-        $this->assertEquals(array('Missing keys: email, password'), Spec\signup(array()));
+        $this->assertEquals(array('Missing keys: email, password'), AuthSpec\signup(array()));
     }
 
     public function testInvalidEmail()
     {
         $email = 'invalid';
-        $this->assertEquals(array("Invalid email format: " . $email), Spec\signup(array('email' => $email, 'password' => 'Password01')));
+        $this->assertEquals(array("Invalid email format: " . $email), AuthSpec\signup(array('email' => $email, 'password' => 'Password01')));
     }
 
     public function testInvalidPassword()
     {
         $password = 'pass';
-        $this->assertEquals(array("Password too short (min length 8)"), Spec\signup(array('email' => 'email@domain.com', 'password' => $password)));
+        $this->assertEquals(array("Password too short (min length 8)"), AuthSpec\signup(array('email' => 'email@domain.com', 'password' => $password)));
     }
 }

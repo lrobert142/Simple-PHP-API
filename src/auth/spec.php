@@ -25,8 +25,7 @@ function signup($params)
 
 function login($params)
 {
-//    $required_fields = array('email', 'password');
-    $required_fields = array('foo', 'bar'); //TODO TEMP
+    $required_fields = array('email', 'password');
     $missing_keys = array_diff($required_fields, array_keys($params));
     $messages = array();
 
