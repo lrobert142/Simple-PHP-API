@@ -14,16 +14,3 @@ function errorCodes()
         'INVALID_REQUEST_METHOD' => 301,
     );
 }
-
-function addRoute($router, $method, $route, $handler, callable $spec = null)
-{
-    //TODO Only run spec when routing, not on every request!
-    if ($spec):
-        $explained = call_user_func($spec, $_REQUEST);
-        if (!empty($explained)):
-            throw new \Exception(implode(' ', $explained), \Common\errorCodes()['SPEC_FAILURE']);
-        endif;
-    endif;
-    $router->addRoute($method, $route, $handler);
-}
-

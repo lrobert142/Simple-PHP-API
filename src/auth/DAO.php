@@ -2,9 +2,9 @@
 
 interface DAO
 {
-    public function signup($data);
+    public function signup(array $data);
 
-    public function login($data);
+    public function login(array $data);
 }
 
 final class AuthMySqlDAO implements DAO
@@ -17,7 +17,7 @@ final class AuthMySqlDAO implements DAO
         $this->conn = $conn;
     }
 
-    public function signup($data)
+    public function signup(array $data)
     {
         try {
             $stmt = $this->conn->prepare('INSERT INTO ' . $this::tablename . ' (Email, Password) VALUES (:email, :password);');
@@ -35,7 +35,7 @@ final class AuthMySqlDAO implements DAO
         }
     }
 
-    public function login($data)
+    public function login(array $data)
     {
         // TODO: Implement login() method.
         return array();

@@ -2,11 +2,11 @@
 
 interface Auth
 {
-    public function signup($data);
+    public function signup(array $data);
 
-    public function login($data);
+    public function login(array $data);
 
-    public function registerRoutes($router);
+    public function registerRoutes(Router $router);
 }
 
 final class DefaultAuth implements Auth
@@ -18,20 +18,20 @@ final class DefaultAuth implements Auth
         return $this->dao = $dao;
     }
 
-    function signup($data)
+    function signup(array $data)
     {
         return array('id' => $this->dao->signup($data));
     }
 
-    function login($data)
+    function login(array $data)
     {
         $user = $this->dao->login($data);
         return array('token' => 'TODO: Generate token from $user!');
     }
 
-    public function registerRoutes($router)
+    public function registerRoutes(Router $router)
     {
-        Common\addRoute($router, 'POST', '/user', array($this, 'signup'), 'AuthSpec\signup');
-        Common\addRoute($router, 'POST', '/login', array($this, 'login'), 'AuthSpec\login');
+        $router->addRoute('POST', '/user', array($this, 'signup'), 'AuthSpec\signup');
+        $router->addRoute('POST', '/login', array($this, 'login'), 'AuthSpec\login');
     }
 }
