@@ -1,13 +1,8 @@
 <?php namespace Database;
 
-function createConnection()
+function createConnection($config)
 {
-    $db = 'database';
-    $host = 'db:3306';
-    $username = 'admin';
-    $password = 'admin';
-
-    $conn = new \PDO("mysql:host=$host;dbname=$db", $username, $password);
+    $conn = new \PDO('mysql:host=' . $config['db_host'] . ';dbname=' . $config['db_name'], $config['db_user'], $config['db_password']);
     $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     return $conn;
 }

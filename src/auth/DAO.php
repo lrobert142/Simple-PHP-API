@@ -37,7 +37,20 @@ final class AuthMySqlDAO implements DAO
 
     public function login(array $data)
     {
-        // TODO: Implement login() method.
-        return array();
+        $pass_stmt = $this->conn->prepare('SELECT Password FROM Users WHERE Email = :email LIMIT 1');
+        $pass_stmt->execute(array(
+            ':email' => $data['email'],
+        ));
+        $result = $pass_stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (isset($result['Password']) && password_verify($data['password'], $result['Password'])):
+            $user_stmt = $this->conn->prepare('SELECT ID, Email FROM Users WHERE Email = :email LIMIT 1');
+            $user_stmt->execute(array(
+                ':email' => $data['email'],
+            ));
+            return $user_stmt->fetch(PDO::FETCH_ASSOC);
+        else:
+            throw new Exception('Invalid login credentials', Common\errorCodes()['INVALID_LOGIN_CREDENTIALS']);
+        endif;
     }
 }
