@@ -117,6 +117,19 @@ final class AuthSpecResetPasswordTest extends TestCase
             )));
     }
 
+    public function testInvalidNewPassword()
+    {
+        $this->assertEquals(
+            array('Password too short (min length 8)'),
+            AuthSpec\resetPassword(array(
+                'old_password' => 'Password01',
+                'new_password' => 'Bad',
+                'confirm_password' => 'Bad',
+                'authorization' => 'Bearer SomeToken'
+            )));
+    }
+
+
     public function testInvalidAuthorizationScheme()
     {
         $this->assertEquals(

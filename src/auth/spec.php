@@ -1,6 +1,5 @@
 <?php namespace AuthSpec;
 
-const min_password_length = 8;
 
 function requireKeys($ks, $vs)
 {
@@ -14,6 +13,18 @@ function requireKeys($ks, $vs)
     return $messages;
 }
 
+function passwordLength($password)
+{
+    $min_password_length = 8;
+    $messages = array();
+
+    if (strlen($password) < $min_password_length):
+        $messages[] = 'Password too short (min length ' . $min_password_length . ')';
+    endif;
+
+    return $messages;
+}
+
 function signup($params)
 {
     $messages = requireKeys(array('email', 'password'), $params);
@@ -22,8 +33,8 @@ function signup($params)
         $messages[] = 'Invalid email format: ' . $params['email'];
     endif;
 
-    if (isset($params['password']) && strlen($params['password']) < min_password_length):
-        $messages[] = 'Password too short (min length ' . min_password_length . ')';
+    if (isset($params['password'])):
+        $messages = array_merge($messages, passwordLength($params['password']));
     endif;
 
     return $messages;
@@ -51,6 +62,10 @@ function resetPassword($params)
 
     if (isset($params['new_password']) && isset($params['confirm_password']) && $params['new_password'] !== $params['confirm_password']):
         $messages[] = 'Passwords do not match';
+    endif;
+
+    if (isset($params['new_password'])):
+        $messages = array_merge($messages, passwordLength($params['new_password']));
     endif;
 
     if (isset($params['authorization']) && explode(' ', $params['authorization'])[0] !== 'Bearer'):

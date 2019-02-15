@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 require_once(__DIR__ . '/../src/common.php');
+require_once(__DIR__ . '/../src/response.php');
 require_once(__DIR__ . '/../src/router.php');
 
 use PHPUnit\Framework\TestCase;
@@ -12,16 +13,24 @@ final class RouterAddRouteTest extends TestCase
         return true;
     }
 
+    function fakeResponse()
+    {
+        return true;
+    }
+
     public function testNoSpec()
     {
         $method = 'GET';
         $url = '/test';
         $handler = 'testHandler';
+
         $router = new DefaultRouter();
         $router->addRoute($method, $url, $handler);
+
         $this->assertEquals(array(array(
             'handler' => $handler,
             'method' => $method,
+            'response' => 'Response\ok',
             'spec' => null,
             'url' => $url,
         )), $router->routes());
@@ -33,11 +42,34 @@ final class RouterAddRouteTest extends TestCase
         $url = '/test';
         $handler = 'testHandler';
         $spec = array($this, 'fakeSpec');
+
         $router = new DefaultRouter();
         $router->addRoute($method, $url, $handler, $spec);
+
         $this->assertEquals(array(array(
             'handler' => $handler,
             'method' => $method,
+            'response' => 'Response\ok',
+            'spec' => $spec,
+            'url' => $url,
+        )), $router->routes());
+    }
+
+    public function testWithResponse()
+    {
+        $method = 'GET';
+        $url = '/test';
+        $handler = 'testHandler';
+        $spec = array($this, 'fakeSpec');
+        $response = array($this, 'fakeResponse');
+
+        $router = new DefaultRouter();
+        $router->addRoute($method, $url, $handler, $spec, $response);
+
+        $this->assertEquals(array(array(
+            'handler' => $handler,
+            'method' => $method,
+            'response' => $response,
             'spec' => $spec,
             'url' => $url,
         )), $router->routes());
@@ -48,19 +80,23 @@ final class RouterAddRouteTest extends TestCase
         $url = '/test';
         $handler = 'testHandler';
         $spec = array($this, 'fakeSpec');
+
         $router = new DefaultRouter();
         $router->addRoute('GET', $url, $handler, $spec);
         $router->addRoute('POST', $url, $handler, $spec);
+
         $this->assertEquals(array(
             array(
                 'handler' => $handler,
                 'method' => 'GET',
+                'response' => 'Response\ok',
                 'spec' => $spec,
                 'url' => $url,
             ),
             array(
                 'handler' => $handler,
                 'method' => 'POST',
+                'response' => 'Response\ok',
                 'spec' => $spec,
                 'url' => $url,
             ),
@@ -73,6 +109,7 @@ final class RouterAddRouteTest extends TestCase
         $url = '/test';
         $handler = 'testHandler';
         $spec = array($this, 'fakeSpec');
+
         $router = new DefaultRouter();
         try {
             $router->addRoute($method, $url, $handler, $spec);
@@ -80,6 +117,7 @@ final class RouterAddRouteTest extends TestCase
             $this->assertEquals('Invalid request method.', $e->getMessage());
             $this->assertEquals(Common\errorCodes()['INVALID_REQUEST_METHOD'], $e->getCode());
         }
+
         $this->assertEmpty($router->routes());
     }
 
@@ -89,6 +127,7 @@ final class RouterAddRouteTest extends TestCase
         $url = '/test';
         $handler = 'testHandler';
         $spec = array($this, 'fakeSpec');
+
         $router = new DefaultRouter();
         $router->addRoute($method, $url, $handler, $spec);
         try {
@@ -97,9 +136,11 @@ final class RouterAddRouteTest extends TestCase
             $this->assertEquals('Cannot add duplicate method/route pair', $e->getMessage());
             $this->assertEquals(Common\errorCodes()['DUPLICATE_ROUTE'], $e->getCode());
         }
+
         $this->assertEquals(array(array(
             'handler' => $handler,
             'method' => $method,
+            'response' => 'Response\ok',
             'spec' => $spec,
             'url' => $url,
         )), $router->routes());
@@ -108,6 +149,11 @@ final class RouterAddRouteTest extends TestCase
 
 final class RouterDispatchTest extends TestCase
 {
+    function fakeResponse($data)
+    {
+        $this->assertEquals('called', $data);
+    }
+
     public function testNoSpec()
     {
         $method = 'GET';
@@ -119,8 +165,8 @@ final class RouterDispatchTest extends TestCase
         };
 
         $router = new DefaultRouter();
-        $router->addRoute($method, $url, $handler);
-        $this->assertEquals('called', $router->dispatch($method, $url, $params));
+        $router->addRoute($method, $url, $handler, null, array($this, 'fakeResponse'));
+        $router->dispatch($method, $url, $params);
     }
 
     public function testPassSpec()
@@ -138,8 +184,8 @@ final class RouterDispatchTest extends TestCase
         };
 
         $router = new DefaultRouter();
-        $router->addRoute($method, $url, $handler, $spec);
-        $this->assertEquals('called', $router->dispatch($method, $url, $params));
+        $router->addRoute($method, $url, $handler, $spec, array($this, 'fakeResponse'));
+        $router->dispatch($method, $url, $params);
     }
 
     public function testFailSpec()
