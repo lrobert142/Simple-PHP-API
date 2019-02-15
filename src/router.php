@@ -2,7 +2,7 @@
 
 interface Router
 {
-    public function addRoute($method, $url, $handler, callable $spec = null);
+    public function addRoute($method, $url, $handler, callable $spec = null, $response = 'Response\ok');
 
     public function dispatch($method, $url, $params);
 
@@ -14,7 +14,7 @@ final class DefaultRouter implements Router
     private $routes = array();
     const allow_methods = array('DELETE', 'GET', 'HEAD', 'POST', 'PUT',);
 
-    public function addRoute($method, $url, $handler, callable $spec = null)
+    public function addRoute($method, $url, $handler, callable $spec = null, $response = 'Response\ok')
     {
         if (!in_array(strtoupper($method), $this::allow_methods)):
             throw new Exception('Invalid request method.', Common\errorCodes()['INVALID_REQUEST_METHOD']);
@@ -27,10 +27,11 @@ final class DefaultRouter implements Router
         endforeach;
 
         $this->routes[] = array(
-            'method' => $method,
-            'url' => $url,
             'handler' => $handler,
-            'spec' => $spec
+            'method' => $method,
+            'response' => $response,
+            'spec' => $spec,
+            'url' => $url,
         );
     }
 
@@ -56,7 +57,7 @@ final class DefaultRouter implements Router
             endif;
         endif;
 
-        return $found_route['handler']($params);
+        $found_route['response']($found_route['handler']($params));
     }
 
     public function routes()

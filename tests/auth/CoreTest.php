@@ -90,7 +90,7 @@ final class DefaultAuthLoginTest extends TestCase
     }
 }
 
-final class DefaultAuthGetAllTest extends TestCase
+final class DefaultAuthResetPasswordTest extends TestCase
 {
     public function testValidToken()
     {
@@ -132,7 +132,7 @@ final class DefaultAuthGetAllTest extends TestCase
             }
         }, $config);
 
-        $this->assertTrue($handler->resetPassword($test_data);
+        $this->assertTrue($handler->resetPassword($test_data));
     }
 
     public function testInvalidToken()

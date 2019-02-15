@@ -56,6 +56,6 @@ final class DefaultAuth implements Auth
     {
         $router->addRoute('POST', '/user', array($this, 'signup'), 'AuthSpec\signup');
         $router->addRoute('POST', '/login', array($this, 'login'), 'AuthSpec\login');
-        $router->addRoute('POST', '/reset-password', array($this, 'resetPassword'), 'AuthSpec\resetPassword');
+        $router->addRoute('POST', '/reset-password', array($this, 'resetPassword'), 'AuthSpec\resetPassword', 'Response\noContent');
     }
 }

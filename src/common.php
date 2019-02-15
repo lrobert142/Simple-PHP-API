@@ -10,6 +10,7 @@ function errorCodes()
         'UNKNOWN_DB_ERROR' => 100,
         'DUPLICATE_FIELD' => 101,
         'INVALID_LOGIN_CREDENTIALS' => 102,
+        'INVALID_PASSWORD_RESET_CREDENTIALS' => 103,
 
         'SPEC_FAILURE' => 200,
         'ROUTE_NOT_FOUND' => 201,

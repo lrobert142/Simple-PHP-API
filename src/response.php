@@ -21,6 +21,11 @@ function ok($data)
     handleWithParams(200, array(), $data);
 }
 
+function noContent()
+{
+    handle(204, array());
+}
+
 function badRequest($data)
 {
     handleWithParams(400, array(), $data);

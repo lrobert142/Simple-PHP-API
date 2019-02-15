@@ -46,6 +46,7 @@ function login($params)
 
 function resetPassword($params)
 {
+    //TODO Verify password length (as in signup, but moved to own fn)
     $messages = requireKeys(array('old_password', 'new_password', 'confirm_password', 'authorization'), $params);
 
     if (isset($params['new_password']) && isset($params['confirm_password']) && $params['new_password'] !== $params['confirm_password']):

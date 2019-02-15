@@ -58,7 +58,20 @@ final class AuthMySqlDAO implements DAO
 
     public function resetPassword(array $data)
     {
-        // TODO: Implement resetPassword() method.
-        throw new Exception('Not Yet Implemented');
+        $pass_stmt = $this->conn->prepare('SELECT Password FROM Users WHERE ID = :id LIMIT 1');
+        $pass_stmt->execute(array(
+            ':id' => $data['user_id'],
+        ));
+        $result = $pass_stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (isset($result['Password']) && password_verify($data['old_password'], $result['Password'])):
+            $stmt = $this->conn->prepare('UPDATE ' . $this::tablename . ' SET password = :password WHERE ID = :id');
+            return $stmt->execute(array(
+                ':password' => password_hash($data['new_password'], PASSWORD_BCRYPT),
+                ':id' => $data['user_id'],
+            ));
+        else:
+            throw new Exception('Old password invalid', Common\errorCodes()['INVALID_PASSWORD_RESET_CREDENTIALS']);
+        endif;
     }
 }
