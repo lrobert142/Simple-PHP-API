@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-require_once(__DIR__ . '/../../src/auth/spec.php');
-
 use PHPUnit\Framework\TestCase;
+
+require_once(__DIR__ . '/../../src/auth/spec.php');
 
 final class AuthRequireKeysTest extends TestCase
 {

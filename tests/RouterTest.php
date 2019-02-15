@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
+use PHPUnit\Framework\TestCase;
+
 require_once(__DIR__ . '/../src/common.php');
 require_once(__DIR__ . '/../src/response.php');
 require_once(__DIR__ . '/../src/router.php');
-
-use PHPUnit\Framework\TestCase;
 
 final class RouterAddRouteTest extends TestCase
 {

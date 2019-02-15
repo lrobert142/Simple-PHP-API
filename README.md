@@ -22,10 +22,9 @@ In order to make most use of this repo, the follow tools are required:
 - [x] MySQL & PHP/Apache server using docker-compose
 - [x] Dependency Injection
 - [x] Separation of concerns via 'layering'
-- [ ] Database migrations
 - [x] Unit testing with PHPUnit
-- [ ] Integration testing of DAOs
 - [ ] End-to-End testing
+- [ ] Database migrations
 
 # Running this project
 
@@ -40,11 +39,17 @@ In order to make most use of this repo, the follow tools are required:
 
 Currently, migrations must be run manually on the database, but should not require any servers to be restarted.
 
-The automation of running these migrations will be looked at in the future.
+The automation of running these migrations may be looked at in the future.
 
 ## Running Tests
 
+### Unit Tests
+
 1. Simply run `./vendor/bin/phpunit --bootstrap vendor/autoload.php --testdox tests` to run all tests under the `/tests` directory
+
+## End-to-End Tests
+
+1. Currently unsupported.
 
 # Useful Tips
 
