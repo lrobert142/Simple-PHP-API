@@ -55,4 +55,4 @@ The automation of running these migrations may be looked at in the future.
 
 - SSH into PHP/Apache service: `docker exec -it api_server /bin/bash`
 - SSH into MySQL service: `docker exec -it api_db /bin/bash`
-    - Access DB: `mysql --user root --password` > enter password > `use database;`
+    - Access DB: `mysql --user <DB_USER> --password` > enter password > `use <DB_NAME>;`
