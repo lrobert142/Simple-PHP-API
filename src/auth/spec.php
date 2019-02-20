@@ -1,6 +1,13 @@
 <?php namespace AuthSpec;
 
-
+/**
+ * Require that the given keys exist in the provided array
+ *
+ * @param   array $ks : Keys that must be included
+ * @param   array $vs : Values to check for keys in
+ *
+ * @return  array : Error messages on failed check, empty otherwise
+ */
 function requireKeys($ks, $vs)
 {
     $missing_keys = array_diff($ks, array_keys($vs));
@@ -13,6 +20,13 @@ function requireKeys($ks, $vs)
     return $messages;
 }
 
+/**
+ * Require the given password is at least the specified length
+ *
+ * @param   string $password : Plaintext password to check length of
+ *
+ * @return  array : Error messages on failed check, empty otherwise
+ */
 function passwordLength($password)
 {
     $min_password_length = 8;
@@ -25,6 +39,15 @@ function passwordLength($password)
     return $messages;
 }
 
+/**
+ * Require the params for a user signup are all present and valid
+ *
+ * @param   array $params : Signup params containing:
+ *              email: User email
+ *              password: User password
+ *
+ * @return  array : Error messages on failed check, empty otherwise
+ */
 function signup($params)
 {
     $messages = requireKeys(array('email', 'password'), $params);
@@ -40,6 +63,15 @@ function signup($params)
     return $messages;
 }
 
+/**
+ * Require the params for a user login are all present and valid
+ *
+ * @param   array $params : Login params containing:
+ *              email: Email to login with
+ *              password: Password to login with
+ *
+ * @return  array : Error messages on failed check, empty otherwise
+ */
 function login($params)
 {
     $messages = requireKeys(array('email', 'password'), $params);
@@ -55,9 +87,19 @@ function login($params)
     return $messages;
 }
 
-function resetPassword($params)
+/**
+ * Require the params for a password change are all present and valid
+ *
+ * @param   array $params : Password change params containing:
+ *              old_password: Old password to be updated
+ *              new_password: New password to use
+ *              confirm_password: Confirmation of new password
+ *              authorization: Auth token
+ *
+ * @return  array : Error messages on failed check, empty otherwise
+ */
+function changePassword($params)
 {
-    //TODO Verify password length (as in signup, but moved to own fn)
     $messages = requireKeys(array('old_password', 'new_password', 'confirm_password', 'authorization'), $params);
 
     if (isset($params['new_password']) && isset($params['confirm_password']) && $params['new_password'] !== $params['confirm_password']):

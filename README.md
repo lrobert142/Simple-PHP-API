@@ -1,4 +1,4 @@
-Demonstrate a very simple API for users using PHP. I _may_ look into having a demo using both OO and functional programming
+Demonstrate a very simple API for users using PHP.
 
 # Prerequisites
 
@@ -9,22 +9,10 @@ In order to make most use of this repo, the follow tools are required:
 
 # Features
 
-## Routes
-
-- Create new user
-- Get a user (only if authenticated)
-- Get multiple users (only if authenticated)
-- Update a user (only if authenticated)
-- Delete a user (only if authenticated)
-
-## Features
-
 - [x] MySQL & PHP/Apache server using docker-compose
 - [x] Dependency Injection
 - [x] Separation of concerns via 'layering'
 - [x] Unit testing with PHPUnit
-- [ ] End-to-End testing
-- [ ] Database migrations
 
 # Running this project
 
@@ -33,23 +21,26 @@ In order to make most use of this repo, the follow tools are required:
     1. I would recommend [direnv](https://direnv.net/) for managing project environment variables
 1. Run the Docker containers using `docker-compose up`
 1. Wait for the images to be built + readied
+1. Run DB migrations (see below)
 1. Use [http://localhost:8000](http://localhost:8000) as the base URL for API calls
 
 ## Running Migrations
 
-Currently, migrations must be run manually on the database, but should not require any servers to be restarted.
+Migrations must be run manually on the database, but should not require any servers to be restarted.
 
-The automation of running these migrations may be looked at in the future.
+To run migrations:
+
+1. Make sure the DB container is running
+1. SSH into the container via: `docker exec -it api_db /bin/bash`
+1. Set the DB to use via: `mysql --user <DB_USER> --password` > enter password > `use <DB_NAME>;`
+1. Copy and paste the migrations in order, executing one after the other.
+1. The database should now be migrated!
+
+**Note:** I am aware that this is not the best way to approach DB migrations, but for simplicity this will suffice for now
 
 ## Running Tests
 
-### Unit Tests
-
 1. Simply run `./vendor/bin/phpunit --bootstrap vendor/autoload.php --testdox tests` to run all tests under the `/tests` directory
-
-## End-to-End Tests
-
-1. Currently unsupported.
 
 # Useful Tips
 

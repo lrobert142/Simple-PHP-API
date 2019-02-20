@@ -1,16 +1,21 @@
 <?php namespace Common;
 
+/**
+ * Error codes for the API.
+ *
+ * 1xx = DB errors
+ * 2xx = Routing errors
+ * 3xx = Internal errors
+ * 4xx = Authentication/Authorization errors
+ */
 function errorCodes()
 {
-    //1xx = DB errors
-    //2xx = Routing errors
-    //3xx = Internal errors
-    //4xx = Authentication/Authorization errors
+
     return array(
         'UNKNOWN_DB_ERROR' => 100,
         'DUPLICATE_FIELD' => 101,
         'INVALID_LOGIN_CREDENTIALS' => 102,
-        'INVALID_PASSWORD_RESET_CREDENTIALS' => 103,
+        'INVALID_PASSWORD_CHANGE_CREDENTIALS' => 103,
 
         'SPEC_FAILURE' => 200,
         'ROUTE_NOT_FOUND' => 201,

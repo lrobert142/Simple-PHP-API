@@ -1,4 +1,5 @@
 <?php
+//This file is the primary entry-point for the API.
 
 use DI\ContainerBuilder;
 

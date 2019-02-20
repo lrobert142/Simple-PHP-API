@@ -34,7 +34,7 @@ final class DefaultAuthSignupTest extends TestCase
                 $this->fail("Method should not be called");
             }
 
-            public function resetPassword($_)
+            public function changePassword($_)
             {
                 $this->fail("Method should not be called");
             }
@@ -76,7 +76,7 @@ final class DefaultAuthLoginTest extends TestCase
                 return array('ID' => 1, 'email' => $actual['email']);
             }
 
-            public function resetPassword($_)
+            public function changePassword($_)
             {
                 $this->fail("Method should not be called");
             }
@@ -89,7 +89,7 @@ final class DefaultAuthLoginTest extends TestCase
     }
 }
 
-final class DefaultAuthResetPasswordTest extends TestCase
+final class DefaultAuthChangePasswordTest extends TestCase
 {
     public function testValidToken()
     {
@@ -124,14 +124,14 @@ final class DefaultAuthResetPasswordTest extends TestCase
                 $this->fail("Method should not be called");
             }
 
-            public function resetPassword($actual)
+            public function changePassword($actual)
             {
                 $this->assertEquals($this->expected, $actual);
                 return true;
             }
         }, $config);
 
-        $this->assertTrue($handler->resetPassword($test_data));
+        $this->assertTrue($handler->changePassword($test_data));
     }
 
     public function testInvalidToken()
@@ -163,14 +163,14 @@ final class DefaultAuthResetPasswordTest extends TestCase
                 $this->fail("Method should not be called");
             }
 
-            public function resetPassword($_)
+            public function changePassword($_)
             {
                 $this->fail("Method should not be called");
             }
         }, $config);
 
         try {
-            $handler->resetPassword($test_data);
+            $handler->changePassword($test_data);
         } catch (Exception $e) {
             $this->assertEquals('Authorization token invalid', $e->getMessage());
             $this->assertEquals(Common\errorCodes()['INVALID_AUTHORIZATION_TOKEN'], $e->getCode());

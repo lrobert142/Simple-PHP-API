@@ -2,11 +2,26 @@
 
 interface DAO
 {
+    /**
+     * Sign up a user with the given data
+     *
+     * @param   array $data : User data required for signup
+     */
     public function signup(array $data);
 
+    /**
+     * Login a user using the given data
+     *
+     * @param   array $data : User data required for login
+     */
     public function login(array $data);
 
-    public function resetPassword(array $data);
+    /**
+     * Change password for a user
+     *
+     * @param   array $data : Data required to change a user's password
+     */
+    public function changePassword(array $data);
 }
 
 final class AuthMySqlDAO implements DAO
@@ -19,6 +34,17 @@ final class AuthMySqlDAO implements DAO
         $this->conn = $conn;
     }
 
+    /**
+     * @inheritdoc
+     *
+     * @param   array $data : Signup data containing:
+     *              email: Email of the user to sign up
+     *              password: Plaintext password to encrypt and store
+     *
+     * @return  int : ID of the inserted user
+     *
+     * @throws  Exception : If the user's email already exists, or if a DB exception occurs
+     */
     public function signup(array $data)
     {
         try {
@@ -37,6 +63,17 @@ final class AuthMySqlDAO implements DAO
         }
     }
 
+    /**
+     * @inheritdoc
+     *
+     * @param   array $data : Login data containing:
+     *              email: Email of the account to log in to
+     *              password: Plaintext password to check against the DB
+     *
+     * @return  array : User information, with sensitive information removed
+     *
+     * @throws  Exception : If email/password combination are invalid
+     */
     public function login(array $data)
     {
         $pass_stmt = $this->conn->prepare('SELECT Password FROM Users WHERE Email = :email LIMIT 1');
@@ -56,7 +93,19 @@ final class AuthMySqlDAO implements DAO
         endif;
     }
 
-    public function resetPassword(array $data)
+    /**
+     * @inheritdoc
+     *
+     * @param   array $data : Change password data containing:
+     *              user_id : ID of the user to change the password for
+     *              old_password : Plaintext password to confirm current password against
+     *              new_password : Plaintext password to encrypt and replace the existing password
+     *
+     * @return  bool : True on successful update, false otherwise
+     *
+     * @throws  Exception : If the supplied old password does not match the stored one
+     */
+    public function changePassword(array $data)
     {
         $pass_stmt = $this->conn->prepare('SELECT Password FROM Users WHERE ID = :id LIMIT 1');
         $pass_stmt->execute(array(
@@ -71,7 +120,7 @@ final class AuthMySqlDAO implements DAO
                 ':id' => $data['user_id'],
             ));
         else:
-            throw new Exception('Old password invalid', Common\errorCodes()['INVALID_PASSWORD_RESET_CREDENTIALS']);
+            throw new Exception('Old password invalid', Common\errorCodes()['INVALID_PASSWORD_CHANGE_CREDENTIALS']);
         endif;
     }
 }

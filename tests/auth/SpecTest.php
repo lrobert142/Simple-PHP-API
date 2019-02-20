@@ -85,11 +85,11 @@ final class AuthSpecLoginTest extends TestCase
     }
 }
 
-final class AuthSpecResetPasswordTest extends TestCase
+final class AuthSpecChangePasswordTest extends TestCase
 {
     public function testValid()
     {
-        $this->assertEmpty(AuthSpec\resetPassword(array(
+        $this->assertEmpty(AuthSpec\changePassword(array(
             'old_password' => 'Password01',
             'new_password' => 'Password02',
             'confirm_password' => 'Password02',
@@ -101,7 +101,7 @@ final class AuthSpecResetPasswordTest extends TestCase
     {
         $this->assertEquals(
             array('Missing keys: old_password, new_password, confirm_password, authorization'),
-            AuthSpec\resetPassword(array())
+            AuthSpec\changePassword(array())
         );
     }
 
@@ -109,7 +109,7 @@ final class AuthSpecResetPasswordTest extends TestCase
     {
         $this->assertEquals(
             array('Passwords do not match'),
-            AuthSpec\resetPassword(array(
+            AuthSpec\changePassword(array(
                 'old_password' => 'Password01',
                 'new_password' => 'Password02',
                 'confirm_password' => 'NotTheSame',
@@ -121,7 +121,7 @@ final class AuthSpecResetPasswordTest extends TestCase
     {
         $this->assertEquals(
             array('Password too short (min length 8)'),
-            AuthSpec\resetPassword(array(
+            AuthSpec\changePassword(array(
                 'old_password' => 'Password01',
                 'new_password' => 'Bad',
                 'confirm_password' => 'Bad',
@@ -134,7 +134,7 @@ final class AuthSpecResetPasswordTest extends TestCase
     {
         $this->assertEquals(
             array('Invalid authorization scheme'),
-            AuthSpec\resetPassword(array(
+            AuthSpec\changePassword(array(
                 'old_password' => 'Password01',
                 'new_password' => 'Password02',
                 'confirm_password' => 'Password02',
@@ -146,7 +146,7 @@ final class AuthSpecResetPasswordTest extends TestCase
     {
         $this->assertEquals(
             array('Authorization token empty'),
-            AuthSpec\resetPassword(array(
+            AuthSpec\changePassword(array(
                 'old_password' => 'Password01',
                 'new_password' => 'Password02',
                 'confirm_password' => 'Password02',

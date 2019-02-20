@@ -1,5 +1,7 @@
 <?php namespace Server;
 
+use \DI\Container;
+
 require_once('common.php');
 require_once('database.php');
 require_once('response.php');
@@ -9,9 +11,13 @@ require_once('auth/core.php');
 require_once('auth/DAO.php');
 require_once('auth/spec.php');
 
-function serve(\DI\Container $deps)
+/**
+ * Serve content to a requester
+ *
+ * @param   Container $deps : Dependencies required by the system
+ */
+function serve(Container $deps)
 {
-// Strip query string (?foo=bar) and decode URI
     $uri = $_SERVER['REQUEST_URI'];
     if (false !== $pos = strpos($uri, '?')):
         $uri = substr($uri, 0, $pos);
