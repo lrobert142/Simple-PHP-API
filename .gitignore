@@ -4,3 +4,4 @@ vendor/
 .phpunit.result.cache
 .envrc
 .env/*
+./composer.phar

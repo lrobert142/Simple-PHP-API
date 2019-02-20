@@ -41,9 +41,3 @@ To run migrations:
 ## Running Tests
 
 1. Simply run `./vendor/bin/phpunit --bootstrap vendor/autoload.php --testdox tests` to run all tests under the `/tests` directory
-
-# Useful Tips
-
-- SSH into PHP/Apache service: `docker exec -it api_server /bin/bash`
-- SSH into MySQL service: `docker exec -it api_db /bin/bash`
-    - Access DB: `mysql --user <DB_USER> --password` > enter password > `use <DB_NAME>;`
