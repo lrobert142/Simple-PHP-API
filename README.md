@@ -26,17 +26,9 @@ In order to make most use of this repo, the follow tools are required:
 
 ## Running Migrations
 
-Migrations must be run manually on the database, but should not require any servers to be restarted.
+Migrations placed inside the `/migrations` folder will be automatically added when the Docker image is rebuilt and then run whenever the image is run.
 
-To run migrations:
-
-1. Make sure the DB container is running
-1. SSH into the container via: `docker exec -it api_db /bin/bash`
-1. Set the DB to use via: `mysql --user <DB_USER> --password` > enter password > `use <DB_NAME>;`
-1. Copy and paste the migrations in order, executing one after the other.
-1. The database should now be migrated!
-
-**Note:** I am aware that this is not the best way to approach DB migrations, but for simplicity this will suffice for now
+If a migration does not seem to be running, make certain it has been included as part of the rebuild step. If it has not, rerun that step using `docker-compose build --no-cache` which will cause the file to be added.
 
 ## Running Tests
 
